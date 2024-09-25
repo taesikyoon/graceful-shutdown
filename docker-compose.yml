@@ -1,0 +1,25 @@
+services:
+  nestjs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nestjs
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    depends_on:
+      - mongo
+    networks:
+      - nestjs
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - '27017:27017'
+    networks:
+      - nestjs
+networks:
+  nestjs:
+    driver: bridge
